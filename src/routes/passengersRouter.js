@@ -7,6 +7,6 @@ import { passengerSchema } from "../schemas/passengersSchema.js";
 const passengersRouter = Router()
 
 passengersRouter.post("/passengers", validateSchema(passengerSchema), passengersController.postPassenger)
-passengersRouter.get("/passengers/travels")
+passengersRouter.get("/passengers/travels", passengersController.getPassengerAndTravels)
 
 export default passengersRouter

@@ -9,6 +9,14 @@ async function postPassenger(req, res){
 
 }
 
+async function getPassengerAndTravels(req,res){
+  const {name} = req.query
+
+  const travelsPassenger = await passengersService(name)
+  res.send(travelsPassenger)
+}
+
 export const passengersController = {
-  postPassenger
+  postPassenger,
+  getPassengerAndTravels
 }
