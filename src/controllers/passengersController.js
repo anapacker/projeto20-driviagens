@@ -12,7 +12,7 @@ async function postPassenger(req, res){
 async function getPassengerAndTravels(req,res){
   const {name} = req.query
 
-  const travelsPassenger = await passengersService(name)
+  const travelsPassenger = await passengersService.getTravelsPassenger(name)
   res.send(travelsPassenger)
 }
 

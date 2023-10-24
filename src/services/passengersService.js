@@ -1,3 +1,4 @@
+import { internalServerError } from "../errors/internalServer.js"
 import { passengerRepository } from "../repositories/passengersRepository.js"
 
 async function createPassenger(firstName, lastName){
@@ -15,9 +16,10 @@ async function getTravelsPassenger(name){
   if(result.rowCount <= 10){
     return result.rows
   }
-  throw 
+  throw internalServerError("Too many results")
 }
 
 export const passengersService = {
-  createPassenger
+  createPassenger,
+  getTravelsPassenger
 }
