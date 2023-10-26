@@ -19,8 +19,41 @@ async function insert(origin,destination, date){
   `, [origin, destination, date])
 }
 
+async function getAll(origin, destination){
+  let query = `
+  SELECT 
+    flights.id,
+    "originCity".name AS origin,
+    "destinationCity".name AS destination,
+    flights.date
+  FROM 
+    flights
+  JOIN 
+    cities AS "originCity" ON flights.origin = "originCity".id
+  JOIN
+    cities AS "destinationCity" ON flights.destination = "destinationCity".id 
+  WHERE flights.date > now() 
+
+  `
+  const queryParams = []
+
+  if(origin){
+    query += ` AND "originCity".name ILIKE $1 `
+    queryParams.push(origin)
+  }
+  if(destination){
+    query += ` AND "destinationCity".name ILIKE $${queryParams.length + 1} `
+    queryParams.push(destination)
+  }
+  query += ` ORDER BY flights.date;`
+  
+  const result = await db.query(query, queryParams)
+  return result.rows
+}
+
 export const flightsRepository ={
   getCitieOrigin,
   getCitieDestination,
-  insert
+  insert,
+  getAll
 }

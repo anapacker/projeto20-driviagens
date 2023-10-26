@@ -8,6 +8,17 @@ async function postFligths(req, res) {
   res.sendStatus(httpStatus.CREATED)
 }
 
+async function getFlights(req, res){
+  const {origin, destination} = req.query
+  const smalletDate = req.query["smaller-date"]
+  const biggerDate = req.query["bigger-date"]
+
+  const flights = await fligthsService.getAllFlights(origin, destination, smalletDate, biggerDate)
+
+  res.send(flights)
+}
+
 export const fligthsController = {
-  postFligths
+  postFligths,
+  getFlights
 }
